@@ -1,0 +1,3738 @@
+{
+ "engine": {
+  "label": "Engine (wazuh-manager-analysisd)",
+  "desc": "Event queue, orchestrator, indexer output, content sync and stream logs. analysisd.* keys: the LAST line wins, an inline # ends the value, booleans are true/false.",
+  "params": [
+   {
+    "key": "analysisd.agent_metadata_cache_clean_interval",
+    "type": "int",
+    "default": 60,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Interval in seconds between best-effort evictions of stale agent metadata cache entries.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.agent_metadata_cache_clean_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.agent_metadata_cache_ttl",
+    "type": "int",
+    "default": 300,
+    "min": 1,
+    "max": 86400,
+    "desc": "Time-to-live in seconds for cached agent metadata.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.agent_metadata_cache_ttl)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.api_resource_kvdb_payload_max_bytes",
+    "type": "int",
+    "default": 100000,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum payload size in bytes accepted for a KVDB resource in the engine's HTTP API server.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.api_resource_kvdb_payload_max_bytes)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "tuner range 0 to 2^53-1",
+    "tuner_cap": "int64_t"
+   },
+   {
+    "key": "analysisd.api_resource_payload_max_bytes",
+    "type": "int",
+    "default": 50000,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum payload size in bytes accepted for a resource in the engine's HTTP API server.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.api_resource_payload_max_bytes)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "tuner range 0 to 2^53-1",
+    "tuner_cap": "int64_t"
+   },
+   {
+    "key": "analysisd.cm_sync_interval",
+    "type": "int",
+    "default": 120,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Seconds between content synchronization cycles from the Wazuh Indexer.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.cm_sync_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.cm_sync_retry_interval",
+    "type": "int",
+    "default": 30,
+    "min": 0,
+    "max": 3600,
+    "desc": "Seconds until the next content synchronization cycle while a space has no route and its policy is not disabled (the indexer failed, or the content is not ready yet).",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.cm_sync_retry_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.cmsync_indexer_connector_max_retries",
+    "type": "int",
+    "default": 3,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum retry attempts for content synchronization requests to the Wazuh Indexer.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.cmsync_indexer_connector_max_retries)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.cmsync_indexer_connector_retry_interval",
+    "type": "int",
+    "default": 5,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Seconds between retry attempts for content synchronization.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.cmsync_indexer_connector_retry_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.cmsync_indexer_connector_sync_batch_size",
+    "type": "int",
+    "default": 100,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum number of content documents requested per Wazuh Indexer page during content synchronization.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.cmsync_indexer_connector_sync_batch_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.debug",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 2,
+    "desc": "Log verbosity for the manager-mode engine process: 0 info, 1 debug, 2 (or higher) trace.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.debug)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "no range check in the engine (3 or more also means trace); tuner limits it to 0-2",
+    "tuner_cap": "int"
+   },
+   {
+    "key": "analysisd.dumper_enabled",
+    "type": "bool",
+    "default": false,
+    "desc": "Whether the event dumper, which writes every incoming event to the dumper stream log, is active at start-up.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.dumper_enabled)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.event_queue_eps",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum number of events per second the router takes from its input queue.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.event_queue_eps)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.event_queue_max_bytes",
+    "type": "int",
+    "default": 33554432,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum total byte size of events waiting in the router input queue.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.event_queue_max_bytes)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.event_queue_size",
+    "type": "int",
+    "default": 131072,
+    "min": 8192,
+    "max": 2147483647,
+    "desc": "Maximum number of events waiting in the router input queue.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.event_queue_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.geo_sync_interval",
+    "type": "int",
+    "default": 360,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Seconds between GeoIP database synchronization cycles.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.geo_sync_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.indexer_bulk_max_bytes",
+    "type": "int",
+    "default": 8388608,
+    "min": 65536,
+    "max": 104857600,
+    "desc": "Maximum byte size of the bulk payload accumulated before a _bulk request is dispatched to wazuh-indexer.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_bulk_max_bytes)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.indexer_flush_interval",
+    "type": "int",
+    "default": 20,
+    "min": 1,
+    "max": 3600,
+    "desc": "Seconds between periodic flushes of the asynchronous indexer bulk buffer.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_flush_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.indexer_logger_queue_size",
+    "type": "int",
+    "default": 8,
+    "min": 1,
+    "max": 1024,
+    "desc": "Maximum number of _bulk responses (with their payloads) that can wait in the indexer error-logger queue.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_logger_queue_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.indexer_logger_threads",
+    "type": "int",
+    "default": 1,
+    "min": 1,
+    "max": 16,
+    "desc": "Number of worker threads that parse _bulk error responses to log per-item failures.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_logger_threads)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.indexer_max_retry_delay",
+    "type": "int",
+    "default": 15,
+    "min": 1,
+    "max": 3600,
+    "desc": "Maximum exponential-backoff delay in seconds between retries of a failed _bulk request (e.g.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_max_retry_delay)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.indexer_monitoring_interval",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 3600,
+    "desc": "Polling period in seconds of the indexer health monitor that marks each wazuh-indexer host as available or unavailable for the connector.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_monitoring_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.indexer_queue_max_bytes",
+    "type": "int",
+    "default": 67108864,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum number of bytes of events waiting in the indexer output queue.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_queue_max_bytes)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.indexer_request_timeout",
+    "type": "int",
+    "default": 60,
+    "min": 0,
+    "max": 3600,
+    "desc": "Upper bound in seconds for one data request against wazuh-indexer.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.indexer_request_timeout)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.ioc_indexer_connector_max_retries",
+    "type": "int",
+    "default": 3,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum retry attempts for IoC synchronization requests to the Wazuh Indexer.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.ioc_indexer_connector_max_retries)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.ioc_indexer_connector_retry_interval",
+    "type": "int",
+    "default": 5,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Seconds between retry attempts for IoC synchronization.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.ioc_indexer_connector_retry_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.ioc_indexer_connector_sync_batch_size",
+    "type": "int",
+    "default": 1000,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum number of IoC documents streamed per Wazuh Indexer page while synchronizing IoC databases.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.ioc_indexer_connector_sync_batch_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.ioc_sync_interval",
+    "type": "int",
+    "default": 360,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Seconds between IoC database synchronization cycles.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.ioc_sync_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.orchestrator_threads",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 128,
+    "desc": "Number of orchestrator worker threads.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.orchestrator_threads)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.remote_conf_indexer_connector_max_retries",
+    "type": "int",
+    "default": 3,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum retry attempts for remote configuration requests to the Wazuh Indexer.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.remote_conf_indexer_connector_max_retries)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.remote_conf_indexer_connector_retry_interval",
+    "type": "int",
+    "default": 5,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Seconds between retry attempts for remote configuration synchronization.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.remote_conf_indexer_connector_retry_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.remote_conf_sync_interval",
+    "type": "int",
+    "default": 120,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Seconds between remote engine configuration synchronization cycles.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.remote_conf_sync_interval)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.server_api_payload_max_bytes",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum request payload size in bytes for the engine's HTTP API server.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.server_api_payload_max_bytes)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "tuner range 0 to 2^53-1",
+    "tuner_cap": "int64_t"
+   },
+   {
+    "key": "analysisd.server_api_timeout",
+    "type": "int",
+    "default": 5000,
+    "min": 1,
+    "max": 2147483647,
+    "desc": "Tester timeout in milliseconds: how long a test run (/logtest, /_internal/tester/run/post) waits for the event's result before answering 400 with Timeout waiting for ingestTest.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.server_api_timeout)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.streamlog_compress",
+    "type": "bool",
+    "default": true,
+    "desc": "Whether rotated stream-log files (events and dumper) are compressed.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_compress)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.streamlog_compression_level",
+    "type": "int",
+    "default": 5,
+    "min": 1,
+    "max": 9,
+    "desc": "Compression level applied to rotated stream-log files (events and dumper).",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_compression_level)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   },
+   {
+    "key": "analysisd.streamlog_dumper_buffer_size",
+    "type": "int",
+    "default": 1048576,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Capacity, in messages, of the dumper stream log's write queue (0 means the default).",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_dumper_buffer_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.streamlog_dumper_max_size",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum size in bytes of one dumper stream-log file before rotation.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_dumper_max_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.streamlog_events_buffer_size",
+    "type": "int",
+    "default": 1048576,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Capacity, in messages, of the events stream log's write queue (0 means the default).",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_events_buffer_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.streamlog_events_max_size",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum size in bytes of one events stream-log file before rotation.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_events_max_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.streamlog_max_accumulated_size",
+    "type": "int",
+    "default": 21474836480,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum total disk size of the rotated files in each stream-log channel directory (applied to the events and the dumper channel separately).",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_max_accumulated_size)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.streamlog_max_files",
+    "type": "int",
+    "default": 90,
+    "min": 0,
+    "max": 9007199254740991,
+    "desc": "Maximum number of rotated files kept in each stream-log channel directory (applied to the events and the dumper channel separately) before the oldest is deleted.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.streamlog_max_files)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ],
+    "note": "unsigned, no upper bound in the engine; tuner caps at 2^53-1",
+    "tuner_cap": "size_t"
+   },
+   {
+    "key": "analysisd.tzdb_auto_update",
+    "type": "bool",
+    "default": false,
+    "desc": "Whether the engine automatically downloads time-zone database updates.",
+    "src": [
+     "src/engine/source/conf/src/conf.cpp (analysisd.tzdb_auto_update)"
+    ],
+    "doc": [
+     "engine-configuration.md"
+    ]
+   }
+  ]
+ },
+ "remoted_https": {
+  "label": "Remoted, HTTPS agent server",
+  "desc": "HTTPS transport for 5.x agents (port 27000): reactor threads, admission control, downstream sockets, auth and control endpoint.",
+  "params": [
+   {
+    "key": "remoted.auth_max_body_size",
+    "type": "int",
+    "default": 5242880,
+    "min": 1048576,
+    "max": 67108864,
+    "desc": "Hard cap on the authenticated request body size, in bytes (checked by the auth middleware, independent of the transport's own body cap -- https.max_body_size, a regular <remote> setting, not an internal option).",
+    "src": [
+     "src/remoted/src/secure.c:486"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.auth_max_decoded_body_size",
+    "type": "int",
+    "default": 33554432,
+    "min": 1048576,
+    "max": 1073741824,
+    "desc": "Hard cap on an authenticated request body after Content-Encoding: zstd decompression, in bytes.",
+    "src": [
+     "src/remoted/src/secure.c:490"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.authd_connect_timeout",
+    "type": "int",
+    "default": 2,
+    "min": 1,
+    "max": 60,
+    "desc": "Seconds remoted waits to connect to authd's local enrollment socket.",
+    "src": [
+     "src/remoted/src/secure.c:544"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.authd_max_queue_size",
+    "type": "int",
+    "default": 256,
+    "min": 1,
+    "max": 65536,
+    "desc": "Enrollment requests that may wait for an authd worker before further ones are refused.",
+    "src": [
+     "src/remoted/src/secure.c:550"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.authd_response_timeout",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 120,
+    "desc": "Seconds remoted waits for authd's answer once connected.",
+    "src": [
+     "src/remoted/src/secure.c:549"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.authd_worker_threads",
+    "type": "int",
+    "default": 8,
+    "min": 1,
+    "max": 32,
+    "desc": "Concurrent connections remoted keeps to authd for enrollment.",
+    "src": [
+     "src/remoted/src/secure.c:554"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_groups_refresh_interval",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "Seconds between refreshes of the cached shared-group listing used to answer /control.",
+    "src": [
+     "src/remoted/src/secure.c:700"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_keepalive_throttle",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "Minimum seconds between two wazuh-db keepalive writes for the same agent.",
+    "src": [
+     "src/remoted/src/secure.c:712"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_msg_queue_size",
+    "type": "int",
+    "default": 16384,
+    "min": 4096,
+    "max": 1048576,
+    "desc": "Queue size for agent keep-alive and control messages.",
+    "src": [
+     "src/remoted/src/config.c:115"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_tm_concurrency",
+    "type": "int",
+    "default": 4,
+    "min": 1,
+    "max": 64,
+    "desc": "Concurrent task-manager requests the control plane may have in flight.",
+    "src": [
+     "src/remoted/src/secure.c:704"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_tm_deadline",
+    "type": "int",
+    "default": 2000,
+    "min": 100,
+    "max": 30000,
+    "desc": "Milliseconds a single task-manager round-trip may take.",
+    "src": [
+     "src/remoted/src/secure.c:705"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_tm_max_queue_size",
+    "type": "int",
+    "default": 10000,
+    "min": 100,
+    "max": 1000000,
+    "desc": "High-water mark for queued task-manager requests.",
+    "src": [
+     "src/remoted/src/secure.c:706"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_wdb_max_queue_size",
+    "type": "int",
+    "default": 10000,
+    "min": 100,
+    "max": 1000000,
+    "desc": "High-water mark for queued wazuh-db requests; over it the handler reports QueueFull.",
+    "src": [
+     "src/remoted/src/secure.c:703"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_wdb_request_connections",
+    "type": "int",
+    "default": 4,
+    "min": 1,
+    "max": 64,
+    "desc": "Size of the wazuh-db connection pool the control plane uses.",
+    "src": [
+     "src/remoted/src/secure.c:701"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.control_wdb_roundtrip_deadline",
+    "type": "int",
+    "default": 5000,
+    "min": 100,
+    "max": 30000,
+    "desc": "Milliseconds a wazuh-db request may take, from when it is queued until its answer, before the control handler gives up.",
+    "src": [
+     "src/remoted/src/secure.c:702"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_connect_timeout",
+    "type": "int",
+    "default": 2,
+    "min": 1,
+    "max": 60,
+    "desc": "Seconds to wait for the connect to a downstream service's Unix socket (the engine's event ingress for /stateless, the inventory sync server for /stateful, /stats and /config) to complete.",
+    "src": [
+     "src/remoted/src/secure.c:458"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_io_threads",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 256,
+    "desc": "Number of threads running the downstream UDS client's io_context.",
+    "src": [
+     "src/remoted/src/secure.c:471"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_max_response_body_size",
+    "type": "int",
+    "default": 10485760,
+    "min": 1048576,
+    "max": 67108864,
+    "desc": "Cap on a downstream response body, in bytes.",
+    "src": [
+     "src/remoted/src/secure.c:474"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_post_process_threads",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 256,
+    "desc": "Number of threads running the per-endpoint post-processors (build/deliver the reply once the downstream service answers).",
+    "src": [
+     "src/remoted/src/secure.c:472"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_response_timeout",
+    "type": "int",
+    "default": 5,
+    "min": 1,
+    "max": 300,
+    "desc": "Seconds to wait for the downstream service's response after the write completes.",
+    "src": [
+     "src/remoted/src/secure.c:460"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_stateful_response_timeout",
+    "type": "int",
+    "default": 20,
+    "min": 1,
+    "max": 3600,
+    "desc": "Seconds to wait for the inventory sync server's answer to a relayed POST /stateful request.",
+    "src": [
+     "src/remoted/src/secure.c:466"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_stateful_retry_after",
+    "type": "int",
+    "default": 20,
+    "min": 0,
+    "max": 3600,
+    "desc": "Retry-After, in seconds, of the 503 answered when remoted.downstream_stateful_response_timeout elapses on a relayed POST /stateful.",
+    "src": [
+     "src/remoted/src/secure.c:470"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.downstream_write_timeout",
+    "type": "int",
+    "default": 5,
+    "min": 1,
+    "max": 300,
+    "desc": "Seconds to wait for the request body write to the downstream service to complete.",
+    "src": [
+     "src/remoted/src/secure.c:459"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.enroll_password_refresh_interval",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 3600,
+    "desc": "Seconds between fallback polls of the two authd-written secret files POST /enroll authenticates against: /etc/wazuh-manager/authd.pass (the shared enrollment password, Password mode) and /etc/wazuh-manager/enrollment_tokens.json (the enrollment token store, every mode).",
+    "src": [
+     "src/remoted/src/secure.c:543"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_buffer_size",
+    "type": "int",
+    "default": 8192,
+    "min": 1,
+    "max": 1048576,
+    "desc": "Socket read buffer size for the HTTPS agent server, in bytes.",
+    "src": [
+     "src/remoted/src/secure.c:414"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_concurrent_accepts",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 64,
+    "desc": "Maximum concurrent in-progress TCP accepts for the HTTPS agent server.",
+    "src": [
+     "src/remoted/src/secure.c:413"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_content_encoding_enabled",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "Whether the HTTPS listener accepts request bodies compressed with Content-Encoding: zstd.",
+    "src": [
+     "src/remoted/src/secure.c:420"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_io_threads",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 64,
+    "desc": "Number of I/O threads (accept + read/write) for the HTTPS agent server.",
+    "src": [
+     "src/remoted/src/secure.c:401"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_max_header_count",
+    "type": "int",
+    "default": 64,
+    "min": 1,
+    "max": 1024,
+    "desc": "Maximum number of HTTP headers accepted per request.",
+    "src": [
+     "src/remoted/src/secure.c:409"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_max_header_name_size",
+    "type": "int",
+    "default": 256,
+    "min": 1,
+    "max": 8192,
+    "desc": "Maximum accepted HTTP header name size, in bytes.",
+    "src": [
+     "src/remoted/src/secure.c:407"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_max_header_value_size",
+    "type": "int",
+    "default": 8192,
+    "min": 1,
+    "max": 65536,
+    "desc": "Maximum accepted HTTP header value size, in bytes.",
+    "src": [
+     "src/remoted/src/secure.c:408"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_max_pipelined_requests",
+    "type": "int",
+    "default": 4,
+    "min": 1,
+    "max": 64,
+    "desc": "Maximum in-flight unanswered requests per connection (HTTP pipelining depth).",
+    "src": [
+     "src/remoted/src/secure.c:410"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_max_url_size",
+    "type": "int",
+    "default": 2048,
+    "min": 1,
+    "max": 65536,
+    "desc": "Maximum accepted URL size, in bytes.",
+    "src": [
+     "src/remoted/src/secure.c:406"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_read_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 300,
+    "desc": "Seconds to wait for a full request to arrive on a connection.",
+    "src": [
+     "src/remoted/src/secure.c:403"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_request_timeout",
+    "type": "int",
+    "default": 30,
+    "min": 1,
+    "max": 600,
+    "desc": "Seconds a request may take to be handled end-to-end.",
+    "src": [
+     "src/remoted/src/secure.c:405"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_stream_chunk_size",
+    "type": "int",
+    "default": 65536,
+    "min": 4096,
+    "max": 1048576,
+    "desc": "Bytes per chunk when streaming a response body (POST /download).",
+    "src": [
+     "src/remoted/src/secure.c:418"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_worker_threads",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 256,
+    "desc": "Number of worker threads that run endpoint handlers (auth + business logic), off the I/O threads.",
+    "src": [
+     "src/remoted/src/secure.c:402"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.http_write_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 300,
+    "desc": "Seconds to wait for a response write to complete.",
+    "src": [
+     "src/remoted/src/secure.c:404"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.jwt_clock_skew",
+    "type": "int",
+    "default": 30,
+    "min": 0,
+    "max": 43200,
+    "desc": "Tolerated clock difference (seconds) between an agent and the manager, applied in both directions: a token may be issued up to jwt_clock_skew seconds in the future, and is still accepted up to jwt_clock_skew seconds after its exp.",
+    "src": [
+     "src/remoted/src/secure.c:484",
+     "src/os_auth/src/config.c:82"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.jwt_max_age",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 43200,
+    "desc": "Maximum age (seconds) of an agent's bearer token (wazuh-agent+jwt) the auth middleware accepts: a token is usable while now - iat <= jwt_max_age + jwt_clock_skew.",
+    "src": [
+     "src/remoted/src/secure.c:483",
+     "src/os_auth/src/config.c:81"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.max_attempts",
+    "type": "int",
+    "default": 4,
+    "min": 1,
+    "max": 16,
+    "desc": "Maximum sends of a request to a UDP legacy agent (and maximum waits for its answer) before the request fails with err Maximum attempts exceeded.",
+    "src": [
+     "src/remoted/src/config.c:124"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.max_deferred_requests",
+    "type": "int",
+    "default": 128,
+    "min": 1,
+    "max": 65536,
+    "desc": "Maximum requests parked awaiting a downstream service before replying with HTTP 503.",
+    "src": [
+     "src/remoted/src/secure.c:445"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.max_handshakes_per_source",
+    "type": "int",
+    "default": 32,
+    "min": 0,
+    "max": 65536,
+    "desc": "Maximum connections from one address that may be in the TLS handshake at once.",
+    "src": [
+     "src/remoted/src/secure.c:441"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.max_inflight_bytes",
+    "type": "int",
+    "default": 268435456,
+    "min": 1048576,
+    "max": 1073741824,
+    "desc": "Maximum in-flight (unprocessed) request payload bytes before the HTTPS server sheds load with HTTP 503.",
+    "src": [
+     "src/remoted/src/secure.c:428"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.max_inflight_bytes_per_agent",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 1073741824,
+    "desc": "Maximum bytes of decoded request bodies a single agent may hold at once, across all its open requests on the authenticated routes.",
+    "src": [
+     "src/remoted/src/secure.c:455"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.max_parallel_connections",
+    "type": "int",
+    "default": 256,
+    "min": 1,
+    "max": 65536,
+    "desc": "Maximum simultaneous HTTPS connections.",
+    "src": [
+     "src/remoted/src/secure.c:435"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.max_requests_per_agent",
+    "type": "int",
+    "default": 6,
+    "min": 1,
+    "max": 65536,
+    "desc": "Maximum requests a single agent may have open at once on the authenticated routes.",
+    "src": [
+     "src/remoted/src/secure.c:449"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.vd_scan_read_timeout",
+    "type": "int",
+    "default": 5,
+    "min": 1,
+    "max": 300,
+    "desc": "Seconds to wait for VD's answer to the inline POST /scan/vd admission relay.",
+    "src": [
+     "src/remoted/src/secure.c:731"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.vd_scan_write_timeout",
+    "type": "int",
+    "default": 5,
+    "min": 1,
+    "max": 300,
+    "desc": "Seconds to wait for the write side of the same inline POST /scan/vd relay to VD.",
+    "src": [
+     "src/remoted/src/secure.c:732"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   }
+  ]
+ },
+ "remoted": {
+  "label": "Remoted, core and legacy listener",
+  "desc": "Queues, worker pools and the legacy (4.x) listener on 1514.",
+  "params": [
+   {
+    "key": "remoted.batch_events_capacity",
+    "type": "int",
+    "default": 131072,
+    "min": 0,
+    "max": 1048576,
+    "desc": "Item capacity of the legacy events queue that the dispatcher batches, enriches and posts to the engine.",
+    "src": [
+     "src/remoted/src/config.c:136"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.batch_events_max_bytes",
+    "type": "int",
+    "default": 33554432,
+    "min": 1024,
+    "max": 2147483647,
+    "desc": "Maximum bytes held in the events queue (events forwarded to the engine).",
+    "src": [
+     "src/remoted/src/config.c:140"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ],
+    "note": "docs narrow the minimum to 1024"
+   },
+   {
+    "key": "remoted.batch_events_per_agent_capacity",
+    "type": "int",
+    "default": 131072,
+    "min": 0,
+    "max": 1048576,
+    "desc": "Maximum events one agent may hold in the legacy events queue; further events from that agent are discarded until its share drains.",
+    "src": [
+     "src/remoted/src/config.c:137"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.buffer_relax",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 2,
+    "desc": "What a legacy TCP connection's receive buffer does with its memory after the complete messages in it have been dispatched.",
+    "src": [
+     "src/remoted/src/config.c:105"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.comp_average_printout",
+    "type": "int",
+    "default": 19999,
+    "min": 10,
+    "max": 999999,
+    "desc": "Messages remoted compresses and encrypts for legacy agents between two debug lines (Event count after '<n>': <original>-><compressed> (<rate>%)) reporting the average compression rate.",
+    "src": [
+     "src/remoted/src/config.c:135",
+     "src/shared/os_crypto/shared/msgs.c:177"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.debug",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 2,
+    "desc": "Debug logging level for remoted module.",
+    "src": [
+     "src/remoted/src/main.c:147"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.disk_storage",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "desc": "Where remoted builds a group's merged.mg before comparing it with the current one.",
+    "src": [
+     "src/remoted/src/config.c:126"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.enrich_cache_expire_time",
+    "type": "int",
+    "default": 300,
+    "min": 60,
+    "max": 86400,
+    "desc": "Agent metadata cache expiration time in seconds.",
+    "src": [
+     "src/remoted/src/config.c:141"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.keyupdate_interval",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 3600,
+    "desc": "Interval in seconds for reloading agent key files.",
+    "src": [
+     "src/remoted/src/config.c:116"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.legacy_task_polling_interval",
+    "type": "int",
+    "default": 900,
+    "min": 300,
+    "max": 86400,
+    "desc": "Interval in seconds between polls of the Task Manager's pending tasks on behalf of connected agents older than v5.0.0.",
+    "src": [
+     "src/remoted/src/config.c:142"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.merge_shared",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "Build each group's merged.mg from the files in its shared/ directory.",
+    "src": [
+     "src/remoted/src/config.c:113"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.pass_empty_keyfile",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "Allow remoted to start when client.keys is missing, unreadable or empty.",
+    "src": [
+     "src/remoted/src/config.c:114"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.queue_max_bytes",
+    "type": "int",
+    "default": 67108864,
+    "min": 1024,
+    "max": 2147483647,
+    "desc": "Maximum bytes held in the input message queue (messages received from agents).",
+    "src": [
+     "src/remoted/src/config.c:139"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ],
+    "note": "docs narrow the minimum to 1024"
+   },
+   {
+    "key": "remoted.receive_chunk",
+    "type": "int",
+    "default": 4096,
+    "min": 1024,
+    "max": 16384,
+    "desc": "Bytes read per recv() call from a legacy TCP connection (the per-connection receive buffer grows in steps of this size).",
+    "src": [
+     "src/remoted/src/config.c:103"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.recv_counter_flush",
+    "type": "int",
+    "default": 128,
+    "min": 10,
+    "max": 999999,
+    "desc": "Messages remoted accepts from legacy agents between two writes of a message counter to an agent's RIDS file (queue/rids/<id>).",
+    "src": [
+     "src/remoted/src/config.c:134",
+     "src/shared/os_crypto/shared/msgs.c:170"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.recv_timeout",
+    "type": "int",
+    "default": 1,
+    "min": 1,
+    "max": 60,
+    "desc": "Receive timeout (SO_RCVTIMEO), in seconds, set on the legacy TCP listening socket.",
+    "src": [
+     "src/remoted/src/config.c:108"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.request_pool",
+    "type": "int",
+    "default": 1024,
+    "min": 1,
+    "max": 4096,
+    "desc": "Maximum requests to legacy agents in progress at once.",
+    "src": [
+     "src/remoted/src/config.c:119"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.request_rto_msec",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 999,
+    "desc": "Retransmission timeout (milliseconds part), added to remoted.request_rto_sec.",
+    "src": [
+     "src/remoted/src/config.c:123"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.request_rto_sec",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 60,
+    "desc": "Retransmission timeout (seconds part) for a request to a UDP legacy agent: how long remoted waits for its ACK before resending.",
+    "src": [
+     "src/remoted/src/config.c:122"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.request_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 600,
+    "desc": "Seconds a request waits for a free slot in remoted.request_pool before it is refused with Request pool is full.",
+    "src": [
+     "src/remoted/src/config.c:120"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.response_timeout",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "Seconds remoted waits for a legacy agent's answer to a request once it has been delivered (Response timeout for request counter ...",
+    "src": [
+     "src/remoted/src/config.c:121"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.rlimit_nofile",
+    "type": "int",
+    "default": 65536,
+    "min": 1024,
+    "max": 1048576,
+    "desc": "Soft file descriptor limit remoted raises itself to at start.",
+    "src": [
+     "src/remoted/src/config.c:117"
+    ],
+    "doc": [
+     "configuration_manager_README.md",
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.send_buffer_size",
+    "type": "int",
+    "default": 131072,
+    "min": 65536,
+    "max": 1048576,
+    "desc": "Capacity, in bytes, of the per-connection send buffer holding messages queued for a legacy TCP agent.",
+    "src": [
+     "src/remoted/src/config.c:106"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.send_chunk",
+    "type": "int",
+    "default": 4096,
+    "min": 512,
+    "max": 16384,
+    "desc": "Maximum bytes taken from a legacy agent's send buffer per socket write.",
+    "src": [
+     "src/remoted/src/config.c:104"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.send_timeout_to_retry",
+    "type": "int",
+    "default": 1,
+    "min": 1,
+    "max": 60,
+    "desc": "Seconds remoted waits before retrying once to queue a message for a legacy agent whose per-connection send buffer (remoted.send_buffer_size) is full.",
+    "src": [
+     "src/remoted/src/config.c:107"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.sender_pool",
+    "type": "int",
+    "default": 8,
+    "min": 1,
+    "max": 64,
+    "desc": "Number of threads that push a group's merged.mg to legacy (4.x) agents.",
+    "src": [
+     "src/remoted/src/config.c:118"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.shared_reload",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 18000,
+    "desc": "Interval in seconds for reloading shared configuration files.",
+    "src": [
+     "src/remoted/src/config.c:125"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.tcp_keepcnt",
+    "type": "int",
+    "default": 3,
+    "min": 1,
+    "max": 50,
+    "desc": "Number of unacknowledged TCP keepalive probes before considering connection dead.",
+    "src": [
+     "src/remoted/src/config.c:111"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.tcp_keepidle",
+    "type": "int",
+    "default": 30,
+    "min": 1,
+    "max": 7200,
+    "desc": "Idle seconds before TCP keepalive probes are sent on the legacy TCP listener's sockets.",
+    "src": [
+     "src/remoted/src/config.c:109"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.tcp_keepintvl",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 100,
+    "desc": "Interval in seconds between TCP keepalive probes.",
+    "src": [
+     "src/remoted/src/config.c:110"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.unauthenticated_max",
+    "type": "int",
+    "default": 16384,
+    "min": 64,
+    "max": 1048576,
+    "desc": "Maximum number of legacy TCP connections open at once without having authenticated (see remoted.unauthenticated_timeout).",
+    "src": [
+     "src/remoted/src/config.c:144"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.unauthenticated_timeout",
+    "type": "int",
+    "default": 60,
+    "min": 10,
+    "max": 3600,
+    "desc": "Seconds a legacy TCP connection may stay open without authenticating, that is, without sending a message that decrypts with a registered agent's key.",
+    "src": [
+     "src/remoted/src/config.c:143"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.verify_msg_id",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "desc": "Reject agent messages whose counter is not higher than the last one received from that agent, to detect replayed messages.",
+    "src": [
+     "src/remoted/src/config.c:127",
+     "src/shared/os_crypto/shared/msgs.c:183"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "remoted.worker_pool",
+    "type": "int",
+    "default": 4,
+    "min": 1,
+    "max": 16,
+    "desc": "Number of message-handler threads that decrypt and dispatch messages read off the legacy listener.",
+    "src": [
+     "src/remoted/src/config.c:112"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   }
+  ]
+ },
+ "limits": {
+  "label": "Agent inventory limits",
+  "desc": "Caps remoted hands every 5.x agent at startup. Set the same values on every cluster node.",
+  "params": [
+   {
+    "key": "fim.file_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:66"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "fim.registry_key_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:67"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "fim.registry_value_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:68"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "sca.checks_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:86"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.browser_extensions_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:83"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.groups_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:81"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.hardware_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:78"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.hotfixes_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:71"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.network_address_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:77"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.network_iface_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:75"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.network_protocol_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:76"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.os_info_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:79"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.packages_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:72"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.ports_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:74"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.processes_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:73"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.services_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:82"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   },
+   {
+    "key": "syscollector.users_limit",
+    "type": "int",
+    "default": 30000,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Inventory cap the manager sends to 5.x agents in the startup answer (limits object).",
+    "src": [
+     "src/remoted/src/config.c:80"
+    ],
+    "doc": [
+     "modules_remoted_configuration.md"
+    ]
+   }
+  ]
+ },
+ "wazuh_db": {
+  "label": "Wazuh DB (wazuh-manager-db)",
+  "desc": "Worker pool, commit timing, open databases, vacuum policy.",
+  "params": [
+   {
+    "key": "wazuh_db.check_fragmentation_interval",
+    "type": "int",
+    "default": 7200,
+    "min": 1,
+    "max": 30758400,
+    "desc": "Seconds between fragmentation checks",
+    "src": [
+     "src/wazuh_db/src/main.c:129"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.commit_time_max",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "Commit an open transaction once it is this many seconds old",
+    "src": [
+     "src/wazuh_db/src/main.c:121"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.commit_time_min",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 3600,
+    "desc": "Commit an open transaction once this many seconds pass without a query",
+    "src": [
+     "src/wazuh_db/src/main.c:120"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.debug",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 2,
+    "desc": "Debug level",
+    "src": [
+     "src/wazuh_db/src/main.c:154"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.fragmentation_delta",
+    "type": "int",
+    "default": 5,
+    "min": 0,
+    "max": 100,
+    "desc": "Growth in fragmentation since the last vacuum needed to vacuum again",
+    "src": [
+     "src/wazuh_db/src/main.c:126"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.fragmentation_threshold",
+    "type": "int",
+    "default": 75,
+    "min": 0,
+    "max": 100,
+    "desc": "Fragmentation percentage above which a vacuum is considered",
+    "src": [
+     "src/wazuh_db/src/main.c:125"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.free_pages_percentage",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 99,
+    "desc": "Minimum free-pages percentage required before any vacuum",
+    "src": [
+     "src/wazuh_db/src/main.c:127"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.max_fragmentation",
+    "type": "int",
+    "default": 90,
+    "min": 0,
+    "max": 100,
+    "desc": "Fragmentation percentage that forces a vacuum",
+    "src": [
+     "src/wazuh_db/src/main.c:128"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.open_db_limit",
+    "type": "int",
+    "default": 64,
+    "min": 1,
+    "max": 4096,
+    "desc": "Databases kept open before idle ones are closed; global.db is never closed",
+    "src": [
+     "src/wazuh_db/src/main.c:122"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.rlimit_nofile",
+    "type": "int",
+    "default": 65536,
+    "min": 1024,
+    "max": 1048576,
+    "desc": "Soft file descriptor limit, capped by the hard limit the daemon inherits",
+    "src": [
+     "src/wazuh_db/src/main.c:123"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh_db.worker_pool_size",
+    "type": "int",
+    "default": 8,
+    "min": 1,
+    "max": 32,
+    "desc": "Worker thread pool size",
+    "src": [
+     "src/wazuh_db/src/main.c:119"
+    ],
+    "doc": [
+     "modules_wazuh_db_configuration.md"
+    ]
+   }
+  ]
+ },
+ "authd": {
+  "label": "Enrollment (wazuh-manager-authd)",
+  "desc": "Agent limit, deletion purge delay and local-socket timeouts.",
+  "params": [
+   {
+    "key": "auth.timeout_microseconds",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 999999,
+    "desc": "Receive timeout of a local-socket client connection, microseconds part (both parts 0 = no timeout).",
+    "src": [
+     "src/os_auth/src/config.c:50"
+    ],
+    "doc": []
+   },
+   {
+    "key": "auth.timeout_seconds",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Receive timeout of a local-socket client connection, seconds part (both parts 0 = no timeout).",
+    "src": [
+     "src/os_auth/src/config.c:49"
+    ],
+    "doc": []
+   },
+   {
+    "key": "authd.debug",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 2,
+    "desc": "The daemon's debug level when it is started without -d: 1 is debug, 2 is verbose debug.",
+    "src": [
+     "src/os_auth/src/main-server.c:111"
+    ],
+    "doc": [
+     "modules_authd_configuration.md"
+    ]
+   },
+   {
+    "key": "authd.max_agents",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "The largest number of agents the keystore may hold.",
+    "src": [
+     "src/os_auth/src/config.c:51"
+    ],
+    "doc": [
+     "modules_authd_configuration.md"
+    ]
+   },
+   {
+    "key": "authd.purge_delay",
+    "type": "int",
+    "default": 120,
+    "min": 0,
+    "max": 3600,
+    "desc": "How long an agent's deletion waits before its indexer purge may run.",
+    "src": [
+     "src/os_auth/src/config.c:63"
+    ],
+    "doc": [
+     "modules_authd_configuration.md"
+    ]
+   },
+   {
+    "key": "authd.wdb_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 300,
+    "desc": "How long authd allows for one wazuh-db round trip.",
+    "src": [
+     "src/os_auth/src/config.c:70"
+    ],
+    "doc": [
+     "modules_authd_configuration.md"
+    ]
+   }
+  ]
+ },
+ "tasks": {
+  "label": "Task Manager",
+  "desc": "Durable task queue: retries, timeouts, retention, log rotation, agent monitoring.",
+  "params": [
+   {
+    "key": "wazuh_modules.manager_task_backoff_base",
+    "type": "int",
+    "default": 30,
+    "min": 1,
+    "max": 3600,
+    "desc": "First retry delay; doubles from here",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:87"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_backoff_cap",
+    "type": "int",
+    "default": 900,
+    "min": 1,
+    "max": 86400,
+    "desc": "Ceiling for both ladders",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:88"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_claim_grace",
+    "type": "int",
+    "default": 30,
+    "min": 1,
+    "max": 3600,
+    "desc": "Slack before a claimed row is considered reclaimable",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:98"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_create_timeout",
+    "type": "int",
+    "default": 2,
+    "min": 1,
+    "max": 60,
+    "desc": "Deadline on the vulnerability scanner's own call to create a row; read by the scanner's configuration reader, not by this module; an out-of-range value fails wazuh-manager-modulesd -t all the same",
+    "src": [
+     "src/config/src/wmodules-vulnerability-detection.c:83"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.manager_task_dead_letter_retention_days",
+    "type": "int",
+    "default": 30,
+    "min": 1,
+    "max": 3650,
+    "desc": "dead_letter rows older than N days",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:109"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_defer_base",
+    "type": "int",
+    "default": 5,
+    "min": 1,
+    "max": 3600,
+    "desc": "First deferral delay",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:89"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_delete_old_agents",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 9600,
+    "desc": "retention window in minutes, on top of agents_disconnection_time",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:122"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.manager_task_delete_old_batch",
+    "type": "int",
+    "default": 200,
+    "min": 1,
+    "max": 100000,
+    "desc": "agents the retention sweep examines per attempt",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:133"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_delete_old_budget",
+    "type": "int",
+    "default": 30,
+    "min": 1,
+    "max": 3600,
+    "desc": "seconds a retention-sweep attempt may hold its executor slot",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:134"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_delete_timeout",
+    "type": "int",
+    "default": 600,
+    "min": 1,
+    "max": 7200,
+    "desc": "Deadline on one deletion call, and the type's watchdog budget.",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:103"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_disconnect_log_max",
+    "type": "int",
+    "default": 200,
+    "min": 0,
+    "max": 1000000,
+    "desc": "agents the disconnection sweep names individually per run; 0 names none",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:124"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback -1 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_executor_threads",
+    "type": "int",
+    "default": null,
+    "min": 1,
+    "max": 64,
+    "desc": "Workers that claim and run manager tasks",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:138"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "module computes the default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_history_per_schedule",
+    "type": "int",
+    "default": 20,
+    "min": 1,
+    "max": 100000,
+    "desc": "Keep at most N finished runs per schedule (dead letters are not counted or removed by this rule)",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:110"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_io_threads",
+    "type": "int",
+    "default": 2,
+    "min": 1,
+    "max": 64,
+    "desc": "Reactor threads serving the socket.",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:137"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_log_compress",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "whether rotated logs are gzipped",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:126"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.manager_task_log_daily_rotations",
+    "type": "int",
+    "default": 12,
+    "min": 1,
+    "max": 256,
+    "desc": "rotated slots per day per file",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:129"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_log_day_wait",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 600,
+    "desc": "offset from local midnight for the daily rotation; 0 is out of range (the slot cannot sit exactly at midnight)",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:132"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_log_keep_days",
+    "type": "int",
+    "default": 31,
+    "min": 0,
+    "max": 500,
+    "desc": "how many days rotated logs are kept; 0 keeps none",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:127"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback -1 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_log_rotate",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "whether either kind of log rotation happens, 0 disables the daily schedule *and* the size-triggered one",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:125"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.manager_task_log_size_rotate",
+    "type": "int",
+    "default": 512,
+    "min": 0,
+    "max": 4096,
+    "desc": "threshold for size-based rotation; 0 disables size rotation while leaving the daily one alone",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:128"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback -1 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_max_attempts",
+    "type": "int",
+    "default": 8,
+    "min": 1,
+    "max": 1000,
+    "desc": "Attempts before dead_letter, for types that have a budget",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:85"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_max_defer",
+    "type": "int",
+    "default": 48,
+    "min": 1,
+    "max": 10000,
+    "desc": "Consecutive deferrals before dead_letter",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:86"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_max_pending_deletes",
+    "type": "int",
+    "default": 20000,
+    "min": 0,
+    "max": 1000000,
+    "desc": "How many agent deletions may be waiting to reach the indexer before authd refuses new ones with 9021 (1766 through the server API).",
+    "src": [
+     "src/os_auth/src/config.c:76",
+     "src/config/src/wmodules-task-manager.c:104"
+    ],
+    "doc": [
+     "modules_authd_configuration.md",
+     "modules_task_manager_manager-tasks.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.manager_task_max_pending_scans",
+    "type": "int",
+    "default": 64,
+    "min": 0,
+    "max": 1000000,
+    "desc": "Admission bound on pending on-demand scans.",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:105"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback -1 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_max_rows",
+    "type": "int",
+    "default": 100000,
+    "min": 1,
+    "max": 100000000,
+    "desc": "Hard ceiling on the table, evicting terminal rows oldest first, completed, then superseded, then failed, dead_letter last",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:111"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_monitor_agents",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "whether the disconnection sweep runs at all (the retention sweep is governed by manager_task_delete_old_agents)",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:123"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.manager_task_poll_interval",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "Maximum scheduler sleep.",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:95"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_retention_days",
+    "type": "int",
+    "default": 7,
+    "min": 1,
+    "max": 3650,
+    "desc": "completed, failed and superseded rows older than N days, measured from when they *reached* that state",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:108"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_sweep_interval",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "How often ownership is swept and stalls are reported",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:97"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_vd_scan_timeout",
+    "type": "int",
+    "default": 300,
+    "min": 1,
+    "max": 3600,
+    "desc": "Deadline on one scan call, and the type's watchdog budget",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:102"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.manager_task_wdb_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 600,
+    "desc": "Deadline on each agent-removal request the retention sweep sends to wazuh-manager-authd.",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:99"
+    ],
+    "doc": [
+     "modules_task_manager_manager-tasks.md"
+    ],
+    "note": "source fallback 0 means module default"
+   }
+  ]
+ },
+ "upgrade": {
+  "label": "Agent upgrades",
+  "desc": "Upgrade batches, WPK downloads and version cache.",
+  "params": [
+   {
+    "key": "wazuh_modules.upgrade_batch_deadline",
+    "type": "int",
+    "default": 180,
+    "min": 10,
+    "max": 3600,
+    "desc": "seconds one batch may take before its remaining agents are failed",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:154"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.upgrade_download_attempts",
+    "type": "int",
+    "default": 3,
+    "min": 1,
+    "max": 10,
+    "desc": "tries per WPK before giving up",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:156"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.upgrade_download_timeout",
+    "type": "int",
+    "default": 45000,
+    "min": 1000,
+    "max": 600000,
+    "desc": "milliseconds per download attempt",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:157"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.upgrade_max_agents",
+    "type": "int",
+    "default": 500,
+    "min": 1,
+    "max": 100000,
+    "desc": "largest batch accepted in one request; a larger one answers every agent with error 2",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:155"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.upgrade_max_concurrent_downloads",
+    "type": "int",
+    "default": 2,
+    "min": 1,
+    "max": 32,
+    "desc": "WPK downloads in flight across all batches",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:158"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.upgrade_queue_depth",
+    "type": "int",
+    "default": 8,
+    "min": 1,
+    "max": 1000,
+    "desc": "batches queued before a request is refused",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:153"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.upgrade_versions_ttl",
+    "type": "int",
+    "default": 300,
+    "min": 0,
+    "max": 86400,
+    "desc": "seconds a repository's versions file is cached; 0 fetches every time",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:159"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "source fallback -1 means module default"
+   },
+   {
+    "key": "wazuh_modules.upgrade_workers",
+    "type": "int",
+    "default": null,
+    "min": 1,
+    "max": 16,
+    "desc": "upgrade batches run at once",
+    "src": [
+     "src/config/src/wmodules-task-manager.c:152"
+    ],
+    "doc": [
+     "modules_task_manager_configuration.md"
+    ],
+    "note": "module computes the default"
+   }
+  ]
+ },
+ "inventory": {
+  "label": "Inventory sync server",
+  "desc": "Transport, admission and indexer connectors of the inventory sync endpoint in modulesd.",
+  "params": [
+   {
+    "key": "wazuh_modules.inventory_sync_server_body_timeout",
+    "type": "int",
+    "default": 30,
+    "min": 0,
+    "max": 3600,
+    "desc": "Seconds from the head to a complete body.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:146"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_buffer_size",
+    "type": "int",
+    "default": 8192,
+    "min": 0,
+    "max": 1048576,
+    "desc": "Per-connection read buffer, in bytes.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:137"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_concurrent_accepts",
+    "type": "int",
+    "default": 2,
+    "min": 0,
+    "max": 64,
+    "desc": "Accept operations kept in flight.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:136"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_control_max_body_bytes",
+    "type": "int",
+    "default": 65536,
+    "min": 0,
+    "max": 1048576,
+    "desc": "Declared-length cap of control-class requests; over it 413.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:177"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_control_max_sessions",
+    "type": "int",
+    "default": 256,
+    "min": 0,
+    "max": 1024,
+    "desc": "Concurrent control-class sessions; over it 503.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:179"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_drain_timeout",
+    "type": "int",
+    "default": 2,
+    "min": 0,
+    "max": 10,
+    "desc": "Seconds stop() waits for already-dispatched requests to answer before their connections are force-closed.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:154"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_header_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 0,
+    "max": 3600,
+    "desc": "Seconds from accept to a complete request head.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:145"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_async_bulk_max_bytes",
+    "type": "int",
+    "default": 4194304,
+    "min": 4096,
+    "max": 104857600,
+    "desc": "Forwarded as bulk_max_bytes.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:294"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_async_flush_interval_seconds",
+    "type": "int",
+    "default": 20,
+    "min": 1,
+    "max": 3600,
+    "desc": "Forwarded as flush_interval_seconds.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:299"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_async_logger_queue_size",
+    "type": "int",
+    "default": 8,
+    "min": 1,
+    "max": 65536,
+    "desc": "Forwarded as logger_queue_size.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:312"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_async_logger_threads",
+    "type": "int",
+    "default": 1,
+    "min": 1,
+    "max": 64,
+    "desc": "Forwarded as logger_threads.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:318"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_async_max_queue_bytes",
+    "type": "int",
+    "default": 67108864,
+    "min": 1,
+    "max": 2147483647,
+    "desc": "Forwarded as max_queue_bytes.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:335"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "docs narrow the minimum to 1"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_async_max_retry_delay_seconds",
+    "type": "int",
+    "default": 15,
+    "min": 1,
+    "max": 3600,
+    "desc": "Forwarded as max_retry_delay_seconds.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:305"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_async_request_timeout_seconds",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "Forwarded as request_timeout_seconds.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:323"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_monitoring_interval_seconds",
+    "type": "int",
+    "default": 10,
+    "min": 1,
+    "max": 3600,
+    "desc": "Forwarded to the shared indexer session as monitoring_interval_seconds.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:344"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_sync_connector_max_bulk_size",
+    "type": "int",
+    "default": 10485760,
+    "min": 4096,
+    "max": 104857600,
+    "desc": "Forwarded to the Indexer Connector as max_bulk_size: the serialized NDJSON bytes the connector stages before it cuts a _bulk request.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:266"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_sync_flush_interval_seconds",
+    "type": "int",
+    "default": 20,
+    "min": 1,
+    "max": 3600,
+    "desc": "No effect.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:271"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_sync_max_bulk_size",
+    "type": "int",
+    "default": 10485760,
+    "min": 4096,
+    "max": 104857600,
+    "desc": "The ingestion pipeline's group-commit threshold, measured in request payload bytes (wire FlatBuffer size): a worker flushes its open batch once the staged sessions reach this many bytes.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:260"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_sync_max_retry_attempts",
+    "type": "int",
+    "default": 5,
+    "min": 0,
+    "max": 1000,
+    "desc": "Forwarded as max_retry_attempts.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:359"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_sync_max_retry_delay_seconds",
+    "type": "int",
+    "default": 15,
+    "min": 1,
+    "max": 3600,
+    "desc": "Forwarded as max_retry_delay_seconds.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:277"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_sync_max_retry_duration_seconds",
+    "type": "int",
+    "default": 15,
+    "min": 0,
+    "max": 3600,
+    "desc": "Forwarded as max_retry_duration_seconds.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:364"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_indexer_sync_request_timeout_seconds",
+    "type": "int",
+    "default": 60,
+    "min": 1,
+    "max": 3600,
+    "desc": "Forwarded as request_timeout_seconds.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:286"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_io_threads",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 128,
+    "desc": "Reactor I/O threads of the inventory sync server. 0 sizes the reactor from the host or cgroup.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:134"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_max_body_size",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 536870912,
+    "desc": "Request body cap in bytes; over it the request is answered 413.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:139"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_max_header_name_size",
+    "type": "int",
+    "default": 256,
+    "min": 0,
+    "max": 65536,
+    "desc": "Max header name size in bytes; over it 431.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:142"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_max_header_value_size",
+    "type": "int",
+    "default": 8192,
+    "min": 0,
+    "max": 1048576,
+    "desc": "Max header value size in bytes; over it 431.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:144"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_max_inflight_bytes",
+    "type": "int",
+    "default": 268435456,
+    "min": 1,
+    "max": 2147483647,
+    "desc": "Total in-flight request payload bytes; over it 503.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:190"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback -1 means module default; docs narrow the minimum to 1"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_max_parallel_connections",
+    "type": "int",
+    "default": 1024,
+    "min": 0,
+    "max": 65536,
+    "desc": "Max simultaneous connections; over it 503 and close.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:171"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_max_sessions_per_agent",
+    "type": "int",
+    "default": 2,
+    "min": 1,
+    "max": 1024,
+    "desc": "Sessions one agent may have admitted and not yet answered, across the sync pipeline and the vulnerability-detection scan lane.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:243"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_max_url_size",
+    "type": "int",
+    "default": 2048,
+    "min": 0,
+    "max": 65536,
+    "desc": "Max request-target size in bytes; over it 414.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:140"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_reserved_control_connections",
+    "type": "int",
+    "default": 64,
+    "min": 0,
+    "max": 256,
+    "desc": "Accept headroom the data plane can never consume.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:175"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_response_timeout",
+    "type": "int",
+    "default": 300,
+    "min": 0,
+    "max": 3600,
+    "desc": "Seconds from handler dispatch to a delivered response.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:150"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_session_query_batch_size",
+    "type": "int",
+    "default": null,
+    "min": 100,
+    "max": 10000,
+    "desc": "Indexer search page size of the checksum verification (ModuleCheck sessions), which pages the agent's documents with search_after.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:159"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "module computes the default; docs narrow the minimum to 100"
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_sync_queue_bytes",
+    "type": "int",
+    "default": 67108864,
+    "min": 1048576,
+    "max": 1073741824,
+    "desc": "Admission cap, in bytes, for sessions accepted by the transport but not yet applied by a worker.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:229"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_sync_workers",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 64,
+    "desc": "Sharded ingestion workers applying accepted sessions.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:227"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_vd_feed_retry_after_seconds",
+    "type": "int",
+    "default": 10,
+    "min": 10,
+    "max": 1800,
+    "desc": "Retry-After value, in seconds, answered with 503 while the vulnerability feed is not ready (or the scanner is enabled here but still starting up).",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:235"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_vd_scan_queue_slots",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 256,
+    "desc": "Sessions and on-demand scan requests allowed to wait for a VD worker.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:238"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_vd_workers",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 64,
+    "desc": "Workers on the vulnerability-detection scan lane.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:236"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.inventory_sync_server_write_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 0,
+    "max": 3600,
+    "desc": "Seconds allowed to write one response.",
+    "src": [
+     "src/wazuh_modules/src/wm_inventory_sync_server.c:151"
+    ],
+    "doc": [
+     "modules_inventory-sync-server_configuration.md"
+    ],
+    "note": "source fallback 0 means module default"
+   }
+  ]
+ },
+ "vulnerability": {
+  "label": "Vulnerability detection",
+  "desc": "Scan workers, CPE cache and the scanner's indexer bulk settings.",
+  "params": [
+   {
+    "key": "vulnerability-detection.scan_workers",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 64,
+    "desc": "Concurrent scan slots. 0 = half the host's cores, minimum 1.",
+    "src": [
+     "src/config/src/wmodules-vulnerability-detection.c:72"
+    ],
+    "doc": [
+     "modules_vulnerability-scanner_configuration.md"
+    ]
+   },
+   {
+    "key": "vulnerability-detection.translation_lru_size",
+    "type": "int",
+    "default": 2048,
+    "min": 1,
+    "max": 100000,
+    "desc": "LRU cache size for OS/package -> CPE translation lookups",
+    "src": [
+     "src/config/src/wmodules-vulnerability-detection.c:69"
+    ],
+    "doc": [
+     "modules_vulnerability-scanner_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.indexer_bulk_size_bytes",
+    "type": "int",
+    "default": 10485760,
+    "min": 4096,
+    "max": 104857600,
+    "desc": "Indexer bulk size threshold in bytes (4 KB to 100 MB)",
+    "src": [
+     "src/config/src/wmodules-vulnerability-detection.c:74"
+    ],
+    "doc": []
+   },
+   {
+    "key": "wazuh_modules.indexer_flush_interval",
+    "type": "int",
+    "default": 20,
+    "min": 1,
+    "max": 3600,
+    "desc": "Indexer periodic flush interval in seconds",
+    "src": [
+     "src/config/src/wmodules-vulnerability-detection.c:75"
+    ],
+    "doc": [
+     "modules_vulnerability-scanner_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.indexer_max_retry_attempts",
+    "type": "int",
+    "default": 5,
+    "min": 0,
+    "max": 1000,
+    "desc": "Failed attempts allowed per indexer operation before it is abandoned",
+    "src": [
+     "src/config/src/wmodules-vulnerability-detection.c:79"
+    ],
+    "doc": [
+     "modules_vulnerability-scanner_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.indexer_max_retry_duration_seconds",
+    "type": "int",
+    "default": 15,
+    "min": 0,
+    "max": 3600,
+    "desc": "Wall-clock retry budget per indexer operation, in seconds",
+    "src": [
+     "src/config/src/wmodules-vulnerability-detection.c:81"
+    ],
+    "doc": [
+     "modules_vulnerability-scanner_configuration.md"
+    ]
+   }
+  ]
+ },
+ "modules": {
+  "label": "Modules daemon and shared",
+  "desc": "wazuh-manager-modulesd common options, agent database sync, thread stack size.",
+  "params": [
+   {
+    "key": "wazuh_database.interval",
+    "type": "int",
+    "default": 60,
+    "min": 0,
+    "max": 86400,
+    "desc": "Seconds between two polls in interval mode.",
+    "src": [
+     "src/wazuh_modules/src/wm_database.c:390"
+    ],
+    "doc": [
+     "modules_database-sync_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_database.max_queued_events",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 2147483647,
+    "desc": "Capacity of the module's internal queue of pending paths in real-time mode.",
+    "src": [
+     "src/wazuh_modules/src/wm_database.c:391"
+    ],
+    "doc": [
+     "modules_database-sync_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_database.real_time",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "How changes to client.keys and /etc/wazuh-manager/shared/ are noticed.",
+    "src": [
+     "src/wazuh_modules/src/wm_database.c:389"
+    ],
+    "doc": [
+     "modules_database-sync_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_database.sync_agents",
+    "type": "int",
+    "default": 1,
+    "min": 0,
+    "max": 1,
+    "desc": "Whether the module runs at all.",
+    "src": [
+     "src/wazuh_modules/src/wm_database.c:388"
+    ],
+    "doc": [
+     "modules_database-sync_configuration.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.debug",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 2,
+    "desc": "Debug level of wazuh-manager-modulesd (the -d flag overrides it)",
+    "src": [
+     "src/wazuh_modules/src/main.c:77"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.kill_timeout",
+    "type": "int",
+    "default": 10,
+    "min": 0,
+    "max": 3600,
+    "desc": "Seconds a module's child process gets to exit at shutdown before it is killed; no manager module starts one",
+    "src": [
+     "src/wazuh_modules/src/wmodules.c:137"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.max_eps",
+    "type": "int",
+    "default": 100,
+    "min": 1,
+    "max": 1000,
+    "desc": "Events per second of the agent-side modules; read and range-checked, but no manager module paces on it",
+    "src": [
+     "src/wazuh_modules/src/wmodules.c:136"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.rlimit_nofile",
+    "type": "int",
+    "default": 65536,
+    "min": 8192,
+    "max": 1048576,
+    "desc": "Soft file descriptor limit of wazuh-manager-modulesd, see File descriptor limits",
+    "src": [
+     "src/wazuh_modules/src/main.c:142"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.socket_timeout",
+    "type": "int",
+    "default": 1,
+    "min": 1,
+    "max": 60,
+    "desc": "Longest time, in seconds, a local client of the wazuh-manager-modulesd request socket can go without sending the next part of its request, or without reading the reply, before the connection is dropped.",
+    "src": [
+     "src/wazuh_modules/src/wmodules.c:141"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.task_nice",
+    "type": "int",
+    "default": 10,
+    "min": -20,
+    "max": 19,
+    "desc": "Nice value of the external programs a module launches; no manager module launches one",
+    "src": [
+     "src/wazuh_modules/src/wmodules.c:135"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh_modules.unmask_credentials",
+    "type": "int",
+    "default": 0,
+    "min": 0,
+    "max": 1,
+    "desc": "Reports module credentials in clear instead of as *; read and range-checked, but the modules that hold credentials run only on agents",
+    "src": [
+     "src/wazuh_modules/src/wmodules.c:142"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   },
+   {
+    "key": "wazuh.thread_stack_size",
+    "type": "int",
+    "default": 8192,
+    "min": 2048,
+    "max": 65536,
+    "desc": "Stack size, in KiB, of the threads wazuh-manager-remoted and wazuh-manager-modulesd start; read at each thread creation, so no daemon's -t reads it and wazuh-manager-control check passes an out-of-range value that then stops the daemon at start",
+    "src": [
+     "src/shared/src/pthreads_op.c:35"
+    ],
+    "doc": [
+     "configuration_manager_README.md"
+    ]
+   }
+  ]
+ }
+}
